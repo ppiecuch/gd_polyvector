@@ -4,10 +4,10 @@
 #include <vector>
 #include <map>
 
-#include <core/os/os.h>
-#include <scene/3d/mesh_instance.h>
-#include <scene/animation/animation_player.h>
-#include <scene/resources/curve.h>
+#include "core/os/os.h"
+#include "scene/3d/mesh_instance.h"
+#include "scene/animation/animation_player.h"
+#include "scene/resources/curve.h"
 
 #include "resource_importer_swf.h"
 #include "earcut.hpp/earcut.hpp"
@@ -16,11 +16,12 @@
 
 using Coord = float;
 using Point = Vector2;
+
 namespace mapbox {
-namespace util {
-template <> struct nth<0, Vector2> { inline static auto get(const Vector2 &v) { return v.x; }; };
-template <> struct nth<1, Vector2> { inline static auto get(const Vector2 &v) { return v.y; }; };
-}
+    namespace util {
+        template <> struct nth<0, Vector2> { inline static Coord get(const Vector2 &v) { return v.x; }; };
+        template <> struct nth<1, Vector2> { inline static Coord get(const Vector2 &v) { return v.y; }; };
+    }
 }
 
 

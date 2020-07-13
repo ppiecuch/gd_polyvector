@@ -2,17 +2,17 @@
 #define RESOURCE_IMPORTER_SWF_H_f6e3a78cd13111e78941cec278b6b50a
 
 using N = uint32_t;
-#include "json/src/json.hpp"
+#include "json/json.hpp"
 using json = nlohmann::json;
 
 #include <vector>
 #include <map>
 #include <set>
-#include <io/resource_import.h>
-#include <io/resource_loader.h>
-#include <io/resource_saver.h>
-#include <scene/resources/curve.h>
-#include <scene/3d/mesh_instance.h>
+#include "core/io/resource_importer.h"
+#include "core/io/resource_loader.h"
+#include "core/io/resource_saver.h"
+#include "scene/resources/curve.h"
+#include "scene/3d/mesh_instance.h"
 
 #include "libshockwave/swfparser.h"
 
@@ -42,7 +42,12 @@ struct PolyVectorPath
 {
 	bool closed;
 	Curve2D curve;
-	void operator=(PolyVectorPath in)
+    PolyVectorPath() {}
+	PolyVectorPath(const PolyVectorPath &in)
+	{
+        *this = in;
+	}
+	void operator=(const PolyVectorPath &in)
 	{
 		closed=in.closed;
 		curve.clear_points();
@@ -82,24 +87,6 @@ typedef Map<uint16_t, MeshQualityMap> MeshDictionaryMap;
 typedef Map<uint16_t, MeshInstance*> MeshInstanceMap;
 
 #ifdef TOOLS_ENABLED
-//class ResourceImporterSVG : public ResourceImporter {
-//	GDCLASS(ResourceImporterSVG, ResourceImporter)
-//public:
-//	virtual String get_importer_name() const { return "RawSVG"; }
-//	virtual String get_visible_name() const { return "Raw SVG"; }
-//	virtual void get_recognized_extensions(List<String> *p_extensions) const { p_extensions->push_back("svg"); p_extensions->push_back("svgz"); }
-//	virtual String get_save_extension() const { return "svgraw"; }
-//	virtual String get_resource_type() const { return "RawSVG"; }
-//	virtual bool get_option_visibility(const String &p_option, const Map<StringName, Variant> &p_options) const { return true; }
-//	virtual int get_preset_count() const { return 0; }
-//	virtual String get_preset_name(int p_idx) const { return String(); }
-//	virtual void get_import_options(List<ImportOption> *r_options, int p_preset = 0) const { return; }
-//
-//	virtual Error import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files = NULL);
-//
-//	ResourceImporterSVG() {}
-//};
-
 class ResourceImporterSWF : public ResourceImporter {
 	GDCLASS(ResourceImporterSWF, ResourceImporter)
 public:
@@ -113,7 +100,7 @@ public:
 	virtual String get_preset_name(int p_idx) const { return String(); }
 	virtual void get_import_options(List<ImportOption> *r_options, int p_preset = 0) const;
 
-	virtual Error import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files = NULL);
+	virtual Error import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files = NULL, Variant *r_metadata = NULL);
 
 	ResourceImporterSWF() {}
 

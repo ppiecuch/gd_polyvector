@@ -155,11 +155,13 @@ void PolyVector::draw_current_frame()
 
 void PolyVector::clear_mesh_data()
 {
-	MeshDictionaryMap &meshdict = this->dataVectorFile->get_mesh_dictionary();
-	for(MeshDictionaryMap::Element *d=meshdict.front(); d; d=d->next()) {
-		for(MeshQualityMap::Element *m=d->get().front(); m; m=m->next())
-			m->get().unref();
-		d->get().clear();
+	if(this->dataVectorFile.is_valid()) {
+		MeshDictionaryMap &meshdict = this->dataVectorFile->get_mesh_dictionary();
+		for(MeshDictionaryMap::Element *d=meshdict.front(); d; d=d->next()) {
+			for(MeshQualityMap::Element *m=d->get().front(); m; m=m->next())
+				m->get().unref();
+			d->get().clear();
+		}
 	}
 }
 
@@ -332,7 +334,7 @@ void PolyVector::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("set_vector_image"), &PolyVector::set_vector_image);
 	ClassDB::bind_method(D_METHOD("get_vector_image"), &PolyVector::get_vector_image);
-	ADD_PROPERTYNZ(PropertyInfo(Variant::OBJECT, "vector", PROPERTY_HINT_RESOURCE_TYPE, "JSONVector"), "set_vector_image", "get_vector_image");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "vector", PROPERTY_HINT_RESOURCE_TYPE, "JSONVector"), "set_vector_image", "get_vector_image");
 
 
 	ADD_GROUP("Display","");
@@ -352,7 +354,7 @@ void PolyVector::_bind_methods()
 	ADD_GROUP("Adjustments","");
 	ClassDB::bind_method(D_METHOD("set_offset"), &PolyVector::set_offset);
 	ClassDB::bind_method(D_METHOD("get_offset"), &PolyVector::get_offset);
-	ADD_PROPERTYNZ(PropertyInfo(Variant::VECTOR2, "offset"), "set_offset", "get_offset");
+	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "offset"), "set_offset", "get_offset");
 
 	ClassDB::bind_method(D_METHOD("set_layer_separation"), &PolyVector::set_layer_separation);
 	ClassDB::bind_method(D_METHOD("get_layer_separation"), &PolyVector::get_layer_separation);
