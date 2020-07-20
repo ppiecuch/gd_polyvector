@@ -7,13 +7,13 @@ Import('env_modules')
 module = os.path.splitext(os.path.basename(os.path.realpath(".")))[0]
 
 env_module = env_modules.Clone()
-env_module.Append(CPPPATH=['libshockwave/lzma/'])
+env_module.Append(CPPPATH=['libs/', 'libs/libshockwave/lzma/'])
 env_module.Append(CPPDEFINES=['_7ZIP_ST'])
 
 
 sources = Glob("*.cpp")
-sources += Glob("libshockwave/*.cpp")
-sources += Glob("libshockwave/lzma/*.c")
+sources += Glob("libs/libshockwave/*.cpp")
+sources += Glob("libs/libshockwave/lzma/*.c")
 
 # Compile as a static library
 lib = env_module.Library(module, sources)
