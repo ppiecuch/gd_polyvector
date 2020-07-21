@@ -1,8 +1,0 @@
-[submodule "libshockwave"]
-	path = libs/libshockwave
-	url = git@github.com:BattyBovine/libshockwave.git
-	branch = master
-[submodule "json"]
-	path = libs/json
-	url = https://github.com/nlohmann/json.git
-	branch = master
