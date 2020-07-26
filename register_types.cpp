@@ -14,9 +14,11 @@ void register_gd_polyvector_types()
 	ResourceLoader::add_resource_format_loader(resource_loader_jsonvector);
 	
 #ifdef TOOLS_ENABLED
-	Ref<ResourceImporterSWF> swfdata;
-	swfdata.instance();
-	ResourceFormatImporter::get_singleton()->add_importer(swfdata);
+	if (Engine::get_singleton()->is_editor_hint()) {
+		Ref<ResourceImporterSWF> swfdata;
+		swfdata.instance();
+		ResourceFormatImporter::get_singleton()->add_importer(swfdata);
+	}
 #endif
 }
 
